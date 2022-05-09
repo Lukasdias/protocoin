@@ -25,7 +25,7 @@
   - HeadlessUI (Componentes feitos com tailwind com acessibilidade, por exemplo: popovers, dialogs etc)
   - Typography Plugin
   - Forms Plugin (Para dar reset no css de forms)
-- Deploy no Vercel, link <a target="_BLANK" href="https://proto-coin.vercel.app/">here</a>
+- Deploy no Vercel, link <a target="_BLANK" href="https://proto-coin.vercel.app/">aqui</a>
 
 </strong>
 
