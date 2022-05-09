@@ -32,8 +32,9 @@
 ## Como rodar? :flashlight:
 
 <strong>
+  
+  - `yarn` + `yarn dev`
 
-- `yarn` + `yarn dev`
-
-- `npm i` + `npm run dev`
-  </strong>
+  - `npm i` + `npm run dev`
+  
+</strong>
