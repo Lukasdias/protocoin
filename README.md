@@ -1,66 +1,39 @@
-# React Tailwindcss Boilerplate build with Vite
+# Desafio Proto Coin :coin:
 
-This is a [ReactJS](https://reactjs.org) + [Vite](https://vitejs.dev) boilerplate to be used with [Tailwindcss](https://tailwindcss.com).
+## Consiste em criar uma aplicação de monitoramento da flutuação de criptomoedas
 
-## What is inside?
+### Funções :thinking:
 
-This project uses many tools like:
+<strong>
 
-- [ReactJS](https://reactjs.org)
-- [Vite](https://vitejs.dev)
-- [TypeScript](https://www.typescriptlang.org)
-- [Jest](https://jestjs.io)
-- [Testing Library](https://testing-library.com)
-- [Tailwindcss](https://tailwindcss.com)
-- [Eslint](https://eslint.org)
-- [Prettier](https://prettier.io)
+- Criação de conta e login(utilizando localStorage)
+- Ajudar na compra e transação de valores.
+- Manipular datas e valores, além da integração com serviços externo
 
-## Getting Started
+</strong>
 
-### Install
+## Tecnologias :crystal_ball:
 
-Create the project.
+<strong>
 
-```bash
-npx degit joaopaulomoraes/reactjs-vite-tailwindcss-boilerplate my-app
-```
+- Vite
+- React
+- Typescript
+- Axios
+- Table-React
+- TaiwindCSS com PostCSS
+  - HeadlessUI (Componentes feitos com tailwind com acessibilidade, por exemplo: popovers, dialogs etc)
+  - Typography Plugin
+  - Forms Plugin (Para dar reset no css de forms)
+- Deploy no Vercel, link <a target="_BLANK" href="">here</a>
 
-Access the project directory.
+</strong>
 
-```bash
-cd my-app
-```
+## Como rodar? :flashlight:
 
-Install dependencies.
+<strong>
 
-```bash
-npm install
-```
+- `yarn` + `yarn dev`
 
-Serve with hot reload at http://localhost:3000.
-
-```bash
-npm run dev
-```
-
-### Lint
-
-```bash
-npm run lint
-```
-
-### Build
-
-```bash
-npm run build
-```
-
-### Test
-
-```bash
-npm run test
-```
-
-## License
-
-This project is licensed under the MIT License.
+- `npm i` + `npm run dev`
+  </strong>
