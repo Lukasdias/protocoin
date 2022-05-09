@@ -6,9 +6,9 @@
 
 <strong>
 
-- Criação de conta e login(utilizando localStorage)
-- Ajudar na compra e transação de valores.
-- Manipular datas e valores, além da integração com serviços externo
+- Criação de conta e login(utilizando localStorage);
+- Ajudar na compra e transação de valores;
+- Manipular datas e valores, além da integração com serviços externos.
 
 </strong>
 
