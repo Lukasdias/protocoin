@@ -1,0 +1,10 @@
+.login-container {
+  background: url('./../../public/proto-login-background.jpg');
+  background-size: cover;
+}
+
+@media screen and (min-width: 768px) {
+  .login-container {
+    background-size: 100vw 100vh;
+  }
+}
