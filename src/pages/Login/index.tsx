@@ -5,15 +5,32 @@ import { LoginForm } from '../../components/LoginForm/index'
 import { Transition } from '@headlessui/react'
 import { RegisterForm } from '../../components/RegisterForm/index'
 import { UserProps } from 'utils/user.props'
+import { simpleAPI, postResp, getResp } from 'lib/api'
+import { FeedbackDialog } from '../../components/FeedbackDialog/index'
+import { authResp } from '../../lib/api'
 
 export function Login() {
   const navigate = useNavigate()
+
   //Login
   const [currentLoginType, setCurrentLoginType] = useState<
     'register' | 'login'
   >('login')
 
-  const [users, setUsers] = useState<UserProps[]>([])
+  const [isUsernameInvalid, setIsUsernameInvalid] = useState(false)
+  const [isEmailInvalid, setIsEmailInvalid] = useState(false)
+  const [isFeedbackDialogOpen, setFeedbackDialogOpen] = useState(false)
+
+  function handleCloseFeedbackDialog() {
+    setFeedbackDialogOpen(false)
+  }
+
+  function handleOpenFeedbackDialog() {
+    setFeedbackDialogOpen(true)
+    setTimeout(() => {
+      setFeedbackDialogOpen(false)
+    }, 1250)
+  }
 
   //Register
   function handleNewLoginType() {
@@ -21,30 +38,54 @@ export function Login() {
     if (currentLoginType === 'login') setCurrentLoginType('register')
   }
 
-  async function handleSubmitLogin(
+  function handleSubmitLogin(
     event: FormEvent,
-    username: string | undefined,
+    unknownKey: string | undefined,
     password: string | undefined
   ) {
     event.preventDefault()
 
-    console.log(username)
-    console.log(password)
+    if (!unknownKey || !password) return
 
-    navigate(`${username}/dashboard`)
+    const res: authResp = simpleAPI.authLogin(unknownKey, password)
+
+    console.log(res)
   }
 
-  async function handleCreateNewUser(event: FormEvent, newUser: UserProps) {
+  function handleCreateNewUser(event: FormEvent, newUser: UserProps) {
     event.preventDefault()
 
-    localStorage.setItem('USERS', JSON.stringify(newUser))
+    const resp: postResp = simpleAPI.post(newUser)
+    console.log(resp)
+
+    switch (resp) {
+      case 'both':
+        setIsEmailInvalid(true)
+        setIsUsernameInvalid(true)
+        break
+      case 'username':
+        setIsUsernameInvalid(true)
+        break
+      case 'email':
+        setIsEmailInvalid(true)
+        break
+      case true:
+        handleOpenFeedbackDialog()
+        handleNewLoginType()
+        break
+      case null:
+        alert('Não foi possível criar o usuário')
+        break
+      default:
+        break
+    }
+
+    setTimeout(() => {
+      setIsEmailInvalid(false)
+      setIsUsernameInvalid(false)
+    }, 6000)
   }
 
-  useEffect(() => {
-    setUsers(JSON.parse(localStorage.getItem('USERS') || '{}'))
-  }, [])
-
-  console.log(users)
   return (
     <div
       className={`login-container flex justify-center items-center w-screen h-screen bg-center p-3 sm:p-0 overflow-hidden relative`}
@@ -63,6 +104,7 @@ export function Login() {
           onLogin={handleSubmitLogin}
         />
       </Transition>
+
       <Transition
         show={currentLoginType === 'register'}
         enter="transition ease-in-out duration-300 transform"
@@ -74,10 +116,20 @@ export function Login() {
         className="absolute top-0 left-0"
       >
         <RegisterForm
+          isDataInvalid={{ isUsernameInvalid, isEmailInvalid }}
           onCreateAccount={handleCreateNewUser}
           onSelectNewLoginType={handleNewLoginType}
         />
       </Transition>
+
+      <FeedbackDialog
+        isOpen={isFeedbackDialogOpen}
+        onClose={handleCloseFeedbackDialog}
+      >
+        <span className="flex justify-center text-5xl font-bold text-center text-green-500">
+          Usuário Cadastrado
+        </span>
+      </FeedbackDialog>
     </div>
   )
 }

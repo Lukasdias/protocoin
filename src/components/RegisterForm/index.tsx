@@ -5,11 +5,16 @@ import { UserProps } from '../../utils/user.props'
 import { FormButton } from '../FormButton/index'
 
 interface RegisterFormProps {
+  isDataInvalid?: {
+    isUsernameInvalid: boolean
+    isEmailInvalid: boolean
+  }
   onSelectNewLoginType: () => void
   onCreateAccount: (event: FormEvent, newUser: UserProps) => void
 }
 
 export function RegisterForm({
+  isDataInvalid,
   onCreateAccount,
   onSelectNewLoginType
 }: RegisterFormProps) {
@@ -42,15 +47,17 @@ export function RegisterForm({
           />
         </div>
         <FormInput
+          isInvalid={isDataInvalid?.isUsernameInvalid}
           inputRef={usernameRef}
           placeholder="Username"
           type="text"
           icon="user"
         />
         <FormInput
+          isInvalid={isDataInvalid?.isEmailInvalid}
           inputRef={emailRef}
           placeholder="Email"
-          type="text"
+          type="email"
           icon="email"
         />
         <FormInput
@@ -62,12 +69,12 @@ export function RegisterForm({
         <FormButton icon="check" text="CRIAR CONTA" />
         <p className="text-base text-center text-white">
           Já tem conta?{' '}
-          <span
+          <a
             onClick={onSelectNewLoginType}
             className="text-proto-brand hover:text-proto-stroke underline underline-offset-2  transition duration-200 cursor-pointer"
           >
             entrar
-          </span>
+          </a>
         </p>
       </section>
     </form>

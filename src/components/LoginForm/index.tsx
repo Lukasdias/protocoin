@@ -5,15 +5,20 @@ import { FormInput } from './../FormInput/index'
 import { FormButton } from '../FormButton/index'
 
 interface LoginFormProps {
+  isDataInvalid?: boolean
   onSelectNewLoginType: () => void
   onLogin: (
     event: FormEvent,
-    username: string | undefined,
+    unknownKey: string | undefined,
     password: string | undefined
   ) => void
 }
 
-export function LoginForm({ onSelectNewLoginType, onLogin }: LoginFormProps) {
+export function LoginForm({
+  onSelectNewLoginType,
+  onLogin,
+  isDataInvalid
+}: LoginFormProps) {
   const usernameRef = useRef<HTMLInputElement>(null)
   const passwordRef = useRef<HTMLInputElement>(null)
 
@@ -33,12 +38,14 @@ export function LoginForm({ onSelectNewLoginType, onLogin }: LoginFormProps) {
 
         <div className="flex flex-col gap-4 w-full ">
           <FormInput
+            isInvalid={isDataInvalid}
             inputRef={usernameRef}
             placeholder="Username ou email"
             type="text"
             icon="user"
           />
           <FormInput
+            isInvalid={isDataInvalid}
             inputRef={passwordRef}
             placeholder="Senha"
             type="password"
