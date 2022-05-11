@@ -1,14 +1,14 @@
 import React, { useState, useMemo, Fragment, useEffect, FormEvent } from 'react'
-import './styles.css'
+import { Formik, Form, Field, ErrorMessage, FormikContext } from 'formik'
 import { useNavigate } from 'react-router-dom'
-import { LoginForm } from '../../components/LoginForm/index'
 import { Transition } from '@headlessui/react'
-import { RegisterForm } from '../../components/RegisterForm/index'
 import { UserProps } from 'utils/user.props'
 import { simpleAPI, postResp, getResp } from 'lib/api'
 import { FeedbackDialog } from '../../components/FeedbackDialog/index'
 import { authResp } from '../../lib/api'
-
+import { SignIn } from '../../components/SignInForm/index'
+import { SignUp } from '../../components/SignUpForm/index'
+import './styles.css'
 export function Login() {
   const navigate = useNavigate()
 
@@ -38,18 +38,8 @@ export function Login() {
     if (currentLoginType === 'login') setCurrentLoginType('register')
   }
 
-  function handleSubmitLogin(
-    event: FormEvent,
-    unknownKey: string | undefined,
-    password: string | undefined
-  ) {
-    event.preventDefault()
-
-    if (!unknownKey || !password) return
-
-    const res: authResp = simpleAPI.authLogin(unknownKey, password)
-
-    console.log(res)
+  function handleSubmitLogin() {
+    return
   }
 
   function handleCreateNewUser(event: FormEvent, newUser: UserProps) {
@@ -99,10 +89,7 @@ export function Login() {
         leaveFrom="opacity-100"
         leaveTo="opacity-0 translate-x-full"
       >
-        <LoginForm
-          onSelectNewLoginType={handleNewLoginType}
-          onLogin={handleSubmitLogin}
-        />
+        <SignIn onSelectNewLoginType={handleNewLoginType} />
       </Transition>
 
       <Transition
@@ -115,11 +102,7 @@ export function Login() {
         leaveTo="-translate-x-full"
         className="absolute top-0 left-0"
       >
-        <RegisterForm
-          isDataInvalid={{ isUsernameInvalid, isEmailInvalid }}
-          onCreateAccount={handleCreateNewUser}
-          onSelectNewLoginType={handleNewLoginType}
-        />
+        <SignUp onSelectNewLoginType={handleNewLoginType} />
       </Transition>
 
       <FeedbackDialog
