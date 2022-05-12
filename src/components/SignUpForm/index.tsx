@@ -157,14 +157,15 @@ export function SignUp({
                 className="font-sans text-xs font-bold text-proto-wallet-down"
               />
               <FormButton icon="check" text="CRIAR CONTA" />
-              <p className="text-base text-center text-white">
+              <p className="text-base text-center text-white ">
                 Já tem conta?{' '}
-                <a
+                <button
+                  type="button"
                   onClick={onSelectNewLoginType}
-                  className="text-proto-brand hover:text-proto-stroke underline underline-offset-2  transition duration-200 cursor-pointer"
+                  className="text-proto-brand hover:text-proto-stroke focus:text-proto-stroke underline focus:no-underline  underline-offset-2 border-b-2 border-transparent focus:border-b-proto-brand outline-none transition duration-200 cursor-pointer"
                 >
                   entrar
-                </a>
+                </button>
               </p>
             </section>
           </Form>

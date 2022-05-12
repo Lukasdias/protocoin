@@ -1,4 +1,4 @@
-import { Dashboard } from 'components/Dashboard'
+import { Dashboard } from '../../components/DashboardComponents/DashboardBody'
 import { Wallet } from 'components/Wallet'
 import React, { useState, Fragment } from 'react'
 import { Transition } from '@headlessui/react'
@@ -12,11 +12,24 @@ export function Account() {
     if (accountSection === 'DASHBOARD') setAccountSection('WALLET')
     else setAccountSection('DASHBOARD')
   }
+
+  function handleAccountSectionDashboard() {
+    setAccountSection('DASHBOARD')
+  }
+  function handleAccountSectionWallet() {
+    setAccountSection('WALLET')
+  }
+
   return (
     <>
       <div className="flex overflow-hidden flex-col w-screen h-screen bg-black">
-        <AccountHeader onChangeAccountSection={handleAccountSectionChange} />
+        <AccountHeader
+          onChangeAccountSectionToDashboard={handleAccountSectionDashboard}
+          onChangeAccountSectionToWallet={handleAccountSectionWallet}
+        />
+
         <Transition
+          unmount={false}
           show={accountSection === 'DASHBOARD'}
           enter="transition  duration-200 transform"
           enterFrom="-translate-x-full opacity-0"

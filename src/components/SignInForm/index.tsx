@@ -128,12 +128,13 @@ export function SignIn({ onSelectNewLoginType }: SignInProps) {
 
           <p className="text-base text-white">
             Ainda não tem conta?{' '}
-            <span
+            <button
+              type="button"
               onClick={onSelectNewLoginType}
-              className="text-proto-brand hover:text-proto-stroke underline underline-offset-2  transition duration-200 cursor-pointer"
+              className="text-proto-brand hover:text-proto-stroke focus:text-proto-stroke underline focus:no-underline  underline-offset-2 border-b-2 border-transparent focus:border-b-proto-brand outline-none transition duration-200 cursor-pointer"
             >
               criar conta
-            </span>{' '}
+            </button>
           </p>
         </Form>
       )}

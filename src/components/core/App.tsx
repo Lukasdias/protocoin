@@ -14,7 +14,8 @@ import { AuthProvider, RequireAuth } from './Auth'
 
 import { Account } from '../../pages/Account/index'
 import { Login } from './../../pages/Login'
-
+import { Wallet } from '../Wallet/index'
+import { Dashboard } from '../DashboardComponents/DashboardBody/index'
 
 function Root() {
   return (
@@ -23,6 +24,14 @@ function Root() {
         <Route
           path="/:id/account"
           element={<RequireAuth>{<Account />}</RequireAuth>}
+        />
+        <Route
+          path="/:id/account/dashboard"
+          element={<RequireAuth>{<Dashboard />}</RequireAuth>}
+        />
+        <Route
+          path="/:id/account/wallet"
+          element={<RequireAuth>{<Wallet />}</RequireAuth>}
         />
 
         <Route path="/" element={Login()} />

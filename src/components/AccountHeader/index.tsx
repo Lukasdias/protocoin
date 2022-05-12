@@ -5,10 +5,16 @@ import { CurrencyBtc, Wallet, UserCircle, ArrowDown } from 'phosphor-react'
 import { useAuth } from '../core/Auth/index'
 import { useNavigate } from 'react-router-dom'
 interface AccountHeaderProps {
-  onChangeAccountSection: () => void
+  onChangeAccountSection?: () => void
+  onChangeAccountSectionToDashboard: () => void
+  onChangeAccountSectionToWallet: () => void
 }
 
-export function AccountHeader({ onChangeAccountSection }: AccountHeaderProps) {
+export function AccountHeader({
+  onChangeAccountSection,
+  onChangeAccountSectionToDashboard,
+  onChangeAccountSectionToWallet
+}: AccountHeaderProps) {
   const navigate = useNavigate()
   const auth = useAuth()
   return (
@@ -18,11 +24,10 @@ export function AccountHeader({ onChangeAccountSection }: AccountHeaderProps) {
 
         <nav className="flex relative gap-5 justify-end items-center px-4">
           <button
-            autoFocus
             className="group transition: flex gap-2 items-center text-sm font-bold text-white focus-within:text-proto-brand hover:text-proto-brand focus:text-proto-brand focus-within::border-0 focus:border-0 outline-none focus-within:ring-0
           focus:ring-0 duration-200   cursor-pointer
           "
-            onClick={onChangeAccountSection}
+            onClick={onChangeAccountSectionToDashboard}
           >
             <CurrencyBtc
               weight="bold"
@@ -32,7 +37,7 @@ export function AccountHeader({ onChangeAccountSection }: AccountHeaderProps) {
           </button>
           <button
             className="group  flex gap-2 items-center text-sm font-bold text-white focus-within:text-proto-brand hover:text-proto-brand focus:text-proto-brand focus-within::border-0 focus:border-0 outline-none focus-within:ring-0 focus:ring-0 transition duration-200  cursor-pointer"
-            onClick={onChangeAccountSection}
+            onClick={onChangeAccountSectionToWallet}
           >
             <Wallet
               weight="bold"
