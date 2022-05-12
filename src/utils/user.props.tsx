@@ -1,4 +1,4 @@
-export interface UserProps {
+export type UserProps = {
   firstName: string | undefined
   lastName: string | undefined
   username: string | undefined

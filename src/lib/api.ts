@@ -1,13 +1,15 @@
 import { type } from 'os'
 import { UserProps } from '../utils/user.props'
+import { EMAIL_REGEX, USERNAME_REGEX } from './../components/SignUpForm'
 const TABLE_NAME = 'USERS'
 
-export type postResp = null | 'email' | 'username' | true | 'both'
+export type signUpResp = null | 'email' | 'username' | true | 'both'
 export type authResp = string | null | undefined
 export type getResp = null
 
 export const simpleAPI = {
-  post: (user: UserProps): postResp => {
+  isAuthenticated: false,
+  signUp: (user: UserProps): signUpResp => {
     try {
       const table: UserProps[] = JSON.parse(
         localStorage.getItem(TABLE_NAME) || '[]'
@@ -33,51 +35,36 @@ export const simpleAPI = {
       return null
     }
   },
-  get: ({ username }: UserProps) => {
-    try {
-      const table: UserProps[] = JSON.parse(
-        localStorage.getItem(TABLE_NAME) || '[]'
-      )
-      for (let i = 0; i < table.length; i++) {
-        if (table[i].username === username) return table[i]
-      }
-    } catch (error) {
-      console.log(error)
-    }
-    return null
-  },
-  authLogin: (
-    unknownKey: string | undefined,
-    password: string | undefined
-  ): authResp => {
-    const regexEmail = /^\w+([\\.-]?\w+)*@\w+([\\.-]?\w+)*(\.\w{2,3})+$/
-    try {
-      const table: UserProps[] = JSON.parse(
-        localStorage.getItem(TABLE_NAME) || '[]'
-      )
+  signIn: (key: string, password: string): UserProps | null | false => {
+    const table: UserProps[] = JSON.parse(
+      localStorage.getItem(TABLE_NAME) || '[]'
+    )
+    if (table.length === 0) return null
 
-      if (table.length === 0) return null
+    let query: UserProps | undefined = undefined
 
-      let myResp = null
-      if (unknownKey?.match(regexEmail)) {
-        myResp = table.find((element) => {
-          if (element.email === unknownKey && element.password === password)
-            return element
-        })
-      } else {
-        myResp = table.find((element) => {
-          if (element.username === unknownKey && element.password === password)
-            return element
-        })
-      }
-      return myResp?.username
-    } catch (error) {
-      console.log(error)
+    if (key.match(EMAIL_REGEX)) {
+      query = table.find((element) => {
+        if (element.email === key) return element
+      })
     }
 
-    return null
+    if (key.match(USERNAME_REGEX)) {
+      query = table.find((element) => {
+        if (element.username === key) return element
+      })
+    }
+
+    if (query != undefined && query.password === password) return query
+    if (query != undefined && query.password !== password) return false
+    else return null
   },
-  remove: (user: UserProps) => {
-    return
+  log(callback: VoidFunction) {
+    simpleAPI.isAuthenticated = true
+    setTimeout(callback, 100)
+  },
+  logout(callback: VoidFunction) {
+    simpleAPI.isAuthenticated = false
+    setTimeout(callback, 100)
   }
 }

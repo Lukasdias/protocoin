@@ -1,15 +1,34 @@
-import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
-import { Dashboard } from './../../pages/Dashboard'
+import * as React from 'react'
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link,
+  useNavigate,
+  useLocation,
+  Navigate,
+  Outlet
+} from 'react-router-dom'
+
+import { AuthProvider, RequireAuth } from './Auth'
+
+import { Account } from '../../pages/Account/index'
 import { Login } from './../../pages/Login'
-import { Wallet } from './../../pages/Wallet'
 
 function Root() {
   return (
-    <Routes>
-      <Route path="/:id/dashboard" element={Dashboard()} />
-      <Route path="/:id/wallet" element={Wallet()} />
-      <Route path="/" element={Login()} />
-    </Routes>
+    <AuthProvider>
+      <Routes>
+        <Route
+          path="/:id/account"
+          element={<RequireAuth>{<Account />}</RequireAuth>}
+        />
+
+        <Route path="/" element={Login()} />
+
+        <Route path="/:id" element={<Navigate to="/" />} />
+      </Routes>
+    </AuthProvider>
   )
 }
 

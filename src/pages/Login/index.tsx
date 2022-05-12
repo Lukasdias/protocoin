@@ -1,13 +1,11 @@
-import React, { useState, useMemo, Fragment, useEffect, FormEvent } from 'react'
-import { Formik, Form, Field, ErrorMessage, FormikContext } from 'formik'
+import React, { useState } from 'react'
+import BrandWhite from '../../public/proto-brand-white.svg'
 import { useNavigate } from 'react-router-dom'
 import { Transition } from '@headlessui/react'
-import { UserProps } from 'utils/user.props'
-import { simpleAPI, postResp, getResp } from 'lib/api'
 import { FeedbackDialog } from '../../components/FeedbackDialog/index'
-import { authResp } from '../../lib/api'
 import { SignIn } from '../../components/SignInForm/index'
 import { SignUp } from '../../components/SignUpForm/index'
+
 import './styles.css'
 export function Login() {
   const navigate = useNavigate()
@@ -19,16 +17,30 @@ export function Login() {
 
   const [isUsernameInvalid, setIsUsernameInvalid] = useState(false)
   const [isEmailInvalid, setIsEmailInvalid] = useState(false)
-  const [isFeedbackDialogOpen, setFeedbackDialogOpen] = useState(false)
+  const [isSuccessFeedbackDialogOpen, setIsSuccessFeedbackDialogOpen] =
+    useState(false)
+  const [isFailedFeedbackDialogOpen, setIsFailedFeedbackDialogOpen] =
+    useState(false)
 
-  function handleCloseFeedbackDialog() {
-    setFeedbackDialogOpen(false)
+  function handleCloseSuccessFeedbackDialog() {
+    setIsSuccessFeedbackDialogOpen(false)
   }
 
-  function handleOpenFeedbackDialog() {
-    setFeedbackDialogOpen(true)
+  function handleCloseFailedFeedbackDialog() {
+    setIsSuccessFeedbackDialogOpen(false)
+  }
+
+  function handleOpenFeedbackFailedDialog() {
+    setIsFailedFeedbackDialogOpen(true)
     setTimeout(() => {
-      setFeedbackDialogOpen(false)
+      setIsFailedFeedbackDialogOpen(false)
+    }, 1250)
+  }
+
+  function handleOpenFeedbackSuccessDialog() {
+    setIsSuccessFeedbackDialogOpen(true)
+    setTimeout(() => {
+      setIsSuccessFeedbackDialogOpen(false)
     }, 1250)
   }
 
@@ -40,40 +52,6 @@ export function Login() {
 
   function handleSubmitLogin() {
     return
-  }
-
-  function handleCreateNewUser(event: FormEvent, newUser: UserProps) {
-    event.preventDefault()
-
-    const resp: postResp = simpleAPI.post(newUser)
-    console.log(resp)
-
-    switch (resp) {
-      case 'both':
-        setIsEmailInvalid(true)
-        setIsUsernameInvalid(true)
-        break
-      case 'username':
-        setIsUsernameInvalid(true)
-        break
-      case 'email':
-        setIsEmailInvalid(true)
-        break
-      case true:
-        handleOpenFeedbackDialog()
-        handleNewLoginType()
-        break
-      case null:
-        alert('Não foi possível criar o usuário')
-        break
-      default:
-        break
-    }
-
-    setTimeout(() => {
-      setIsEmailInvalid(false)
-      setIsUsernameInvalid(false)
-    }, 6000)
   }
 
   return (
@@ -102,17 +80,34 @@ export function Login() {
         leaveTo="-translate-x-full"
         className="absolute top-0 left-0"
       >
-        <SignUp onSelectNewLoginType={handleNewLoginType} />
+        <SignUp
+          onSignUpFailed={handleOpenFeedbackFailedDialog}
+          onSignUpSuccess={handleOpenFeedbackSuccessDialog}
+          onSelectNewLoginType={handleNewLoginType}
+        />
       </Transition>
 
       <FeedbackDialog
-        isOpen={isFeedbackDialogOpen}
-        onClose={handleCloseFeedbackDialog}
+        isOpen={isSuccessFeedbackDialogOpen}
+        onClose={handleCloseSuccessFeedbackDialog}
       >
         <span className="flex justify-center text-5xl font-bold text-center text-green-500">
           Usuário Cadastrado
         </span>
       </FeedbackDialog>
+
+      <FeedbackDialog
+        isOpen={isFailedFeedbackDialogOpen}
+        onClose={handleCloseFailedFeedbackDialog}
+      >
+        <span className="flex justify-center text-5xl font-bold text-center text-red-600">
+          Usuário ou Email já existem no sistema
+        </span>
+      </FeedbackDialog>
+
+      <div className="hidden absolute right-9 bottom-3 lg:flex">
+        <img className="w-[30vw] max-w-[329px]" src={BrandWhite} alt="" />
+      </div>
     </div>
   )
 }

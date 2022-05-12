@@ -5,8 +5,12 @@ import { UserProps } from '../../utils/user.props'
 import { FormButton } from '../FormButton/index'
 import { Formik, Form, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
+import { simpleAPI } from './../../lib/api'
+import { signUpResp } from '../../lib/api'
 
 interface SignUpProps {
+  onSignUpSuccess: () => void
+  onSignUpFailed: (error: signUpResp) => void
   onSelectNewLoginType: () => void
 }
 
@@ -18,17 +22,21 @@ interface Values {
   password: string
 }
 
+export const EMAIL_REGEX =
+  /^([a-z]){1,}([a-z0-9._-]){1,}([@]){1}([a-z]){2,}([.]){1}([a-z]){2,}([.]?){1}([a-z]?){2,}$/i
+export const USERNAME_REGEX = /^[a-zA-Z0-9_.-]*$/
+
 const SignUpSchema = Yup.object().shape({
   firstname: Yup.string()
     .min(2, 'Muito pequeno!')
-    .max(15, 'Muito Longo!')
+    .max(20, 'Muito Longo!')
     .required('Necessário'),
   lastname: Yup.string()
     .min(2, 'Muito pequeno!')
-    .max(15, 'Muito Longo!')
+    .max(20, 'Muito Longo!')
     .required('Necessário'),
   username: Yup.string()
-    .matches(/^[a-zA-Z0-9_.-]*$/, { message: 'Somente letras, números e _' })
+    .matches(USERNAME_REGEX, { message: 'Somente letras, números e _' })
     .min(2, 'Muito pequeno!')
     .max(15, 'Muito Longo!')
     .required('Necessário'),
@@ -37,17 +45,18 @@ const SignUpSchema = Yup.object().shape({
     .max(14, 'Muito Longo!')
     .required('Necessário'),
   email: Yup.string()
-    .matches(
-      /^([a-z]){1,}([a-z0-9._-]){1,}([@]){1}([a-z]){2,}([.]){1}([a-z]){2,}([.]?){1}([a-z]?){2,}$/i,
-      {
-        message: 'Tente algo como usuario@proto.com'
-      }
-    )
+    .matches(EMAIL_REGEX, {
+      message: 'Tente algo como usuario@email.com'
+    })
     .email('Email Inválido')
     .required('Necessário')
 })
 
-export function SignUp({ onSelectNewLoginType }: SignUpProps) {
+export function SignUp({
+  onSelectNewLoginType,
+  onSignUpFailed,
+  onSignUpSuccess
+}: SignUpProps) {
   return (
     <>
       <Formik
@@ -58,35 +67,23 @@ export function SignUp({ onSelectNewLoginType }: SignUpProps) {
           email: '',
           password: ''
         }}
-        // validate={(values: Values) => {
-        //   const errors = {
-        //     firstname: {},
-        //     lastname: {},
-        //     username: {},
-        //     email: {},
-        //     password: {}
-        //   }
-        //   if (!values.username) {
-        //     errors.username = 'Nome de usuário é necessário'
-        //   }
-        //   if (!values.firstname) {
-        //     errors.firstname = 'Primeiro nome é necessário'
-        //   }
-        //   if (!values.lastname) {
-        //     errors.lastname = 'Último nome é Necessário'
-        //   }
-        //   if (!/^[a-zA-Z0-9]{6,}$/i.test(values.email)) {
-        //     errors.password = 'Insira no mínimo 6 caracteres'
-        //   }
-        //   if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{4,}$/i.test(values.email)) {
-        //     errors.email = 'E-mail é inválido'
-        //   }
-        //   return errors
-        // }}
         validationSchema={SignUpSchema}
-        onSubmit={async (values) => {
-          await new Promise((resolve) => setTimeout(resolve, 500))
-          alert(JSON.stringify(values, null, 2))
+        onSubmit={(values) => {
+          const response: signUpResp = simpleAPI.signUp({
+            firstName: values.firstname,
+            lastName: values.lastname,
+            username: values.username,
+            email: values.email,
+            password: values.password
+          })
+          console.log(response)
+          if (response === true) {
+            onSelectNewLoginType()
+            onSignUpSuccess()
+            //alert(JSON.stringify(localStorage.getItem('USERS'), null, 2))
+          } else {
+            onSignUpFailed(response)
+          }
         }}
       >
         {({ errors, touched }) => (
