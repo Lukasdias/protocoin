@@ -26,6 +26,7 @@ const SignInSchema = Yup.object().shape({
 
 export function SignIn({ onSelectNewLoginType }: SignInProps) {
   const navigate = useNavigate()
+  const location = useLocation()
   const auth = useAuth()
   const [userNotFound, setUserNotFound] = useState<boolean>(false)
   const [isWrongPassword, setIsWrongPassword] = useState(false)

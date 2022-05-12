@@ -63,7 +63,7 @@ export const simpleAPI = {
     simpleAPI.isAuthenticated = true
     setTimeout(callback, 100)
   },
-  logout(callback: VoidFunction) {
+  logOut(callback: VoidFunction) {
     simpleAPI.isAuthenticated = false
     setTimeout(callback, 100)
   }

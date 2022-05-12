@@ -20,5 +20,9 @@ module.exports = {
       serif: ['Public sans', 'serif']
     }
   },
-  plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography')]
+  plugins: [
+    require('@tailwindcss/forms'),
+    require('@tailwindcss/typography'),
+    require('tailwind-scrollbar')
+  ]
 }

@@ -15,6 +15,7 @@ import { AuthProvider, RequireAuth } from './Auth'
 import { Account } from '../../pages/Account/index'
 import { Login } from './../../pages/Login'
 
+
 function Root() {
   return (
     <AuthProvider>
