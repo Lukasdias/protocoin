@@ -38,7 +38,7 @@ export function SendSection() {
       const response = await axios.get('https://blockchain.info/ticker')
       setCoinInfo(response.data[coinRegionCode])
     } catch (error) {
-      console.log(error)
+      //console.log(error)
     }
   }
 

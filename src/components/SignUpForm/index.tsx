@@ -77,7 +77,7 @@ export function SignUp({
             password: values.password,
             transactions: []
           })
-          console.log(response)
+          //console.log(response)
           if (response === true) {
             onSelectNewLoginType()
             onSignUpSuccess()

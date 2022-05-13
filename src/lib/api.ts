@@ -38,7 +38,7 @@ export const simpleAPI = {
       if (table.length === 0) return null
       else return table
     } catch (error) {
-      console.log(error)
+      //console.log(error)
       return null
     }
   },
@@ -64,7 +64,7 @@ export const simpleAPI = {
 
       return true
     } catch (error) {
-      console.log(error)
+      //console.log(error)
       return null
     }
   },

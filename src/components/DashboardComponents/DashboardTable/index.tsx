@@ -95,7 +95,7 @@ export function DashboardTable() {
     const sortedData = fullSet
       .sort((a, b) => 0 - (a.symbol > b.symbol ? -1 : 1))
       .slice(0, maxTableSize)
-    console.log(sortedData)
+    //console.log(sortedData)
     setData([...sortedData])
   }
 
@@ -119,7 +119,7 @@ export function DashboardTable() {
         .toUpperCase()
         .includes(event?.target.value.toUpperCase())
     })
-    console.log(filterData)
+    //console.log(filterData)
     setData([...filterData.slice(0, maxTableSize)])
   }
 
