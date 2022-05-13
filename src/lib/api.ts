@@ -1,5 +1,5 @@
 import { type } from 'os'
-import { UserProps } from '../utils/user.props'
+import { UserProps, TransactionType } from '../utils/user.props'
 import { EMAIL_REGEX, USERNAME_REGEX } from './../components/SignUpForm'
 const TABLE_NAME = 'USERS'
 
@@ -9,6 +9,39 @@ export type getResp = null
 
 export const simpleAPI = {
   isAuthenticated: false,
+  addTransaction: (
+    username: string,
+    transaction: TransactionType
+  ): true | null => {
+    const table: UserProps[] = JSON.parse(
+      localStorage.getItem(TABLE_NAME) || '[]'
+    )
+    if (table.length === 0) return null
+
+    const resp = table.find((element) => {
+      if (element.username === username) {
+        element.transactions.push(transaction)
+        return true
+      }
+    })
+
+    if (resp !== undefined) {
+      localStorage.setItem('USERS', JSON.stringify(table))
+      return true
+    } else return null
+  },
+  get: (): UserProps[] | null => {
+    try {
+      const table: UserProps[] = JSON.parse(
+        localStorage.getItem(TABLE_NAME) || '[]'
+      )
+      if (table.length === 0) return null
+      else return table
+    } catch (error) {
+      console.log(error)
+      return null
+    }
+  },
   signUp: (user: UserProps): signUpResp => {
     try {
       const table: UserProps[] = JSON.parse(

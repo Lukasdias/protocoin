@@ -1,9 +1,14 @@
 import { Dashboard } from '../../components/DashboardComponents/DashboardBody'
-import { Wallet } from 'components/Wallet'
+import { Wallet } from 'components/WalletComponents/WalletBody'
 import React, { useState, Fragment } from 'react'
 import { Transition } from '@headlessui/react'
 import { AccountHeader } from '../../components/AccountHeader/index'
 type AccountSectionType = 'DASHBOARD' | 'WALLET'
+
+const AccountSectionWrapper = (children: any) => {
+  return { children }
+}
+
 export function Account() {
   const [accountSection, setAccountSection] =
     useState<AccountSectionType>('DASHBOARD')

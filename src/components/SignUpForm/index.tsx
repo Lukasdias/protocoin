@@ -74,7 +74,8 @@ export function SignUp({
             lastName: values.lastname,
             username: values.username,
             email: values.email,
-            password: values.password
+            password: values.password,
+            transactions: []
           })
           console.log(response)
           if (response === true) {

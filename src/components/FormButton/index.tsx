@@ -10,16 +10,16 @@ export function FormButton({ ...props }: FormButtonProps) {
   return (
     <button
       type="submit"
-      className="group grid relative grid-cols-3 py-3 px-5 w-full h-[50px] focus:text-white
-    bg-proto-brand hover:bg-transparent focus:bg-black rounded-md border-2 border-none
-    focus-within:border-none focus:border-none focus-visible:outline-none focus-within::ring-2
-    hover:ring-2 focus:ring-2 focus-within::ring-proto-brand hover:ring-proto-brand
-    focus:ring-proto-brand focus-within::ring-offset-2 hover:ring-offset-2 focus:ring-offset-2
-    focus-within::ring-offset-transparent hover:ring-offset-transparent focus:ring-offset-transparent transition duration-200
+      className="group grid relative grid-cols-3 px-5 w-full h-[76px] focus:text-white bg-proto-brand hover:bg-transparent
+    focus:bg-black rounded-md border-2 border-none focus-within:border-none focus:border-none
+    focus-visible:outline-none focus-within::ring-2 hover:ring-2 focus:ring-2
+    focus-within::ring-proto-brand hover:ring-proto-brand focus:ring-proto-brand focus-within::ring-offset-2
+    hover:ring-offset-2 focus:ring-offset-2 focus-within::ring-offset-transparent hover:ring-offset-transparent
+    focus:ring-offset-transparent transition duration-200 sm:py-3 sm:h-[50px]
     "
     >
       <div></div>
-      <span className="flex justify-center items-center text-base font-bold group-hover:text-white transition duration-200">
+      <span className="flex justify-center items-center m-auto w-full text-base font-bold group-hover:text-white transition duration-200">
         {props.text}
       </span>
 

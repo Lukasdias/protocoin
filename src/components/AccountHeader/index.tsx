@@ -19,10 +19,10 @@ export function AccountHeader({
   const auth = useAuth()
   return (
     <>
-      <header className="flex relative justify-between items-center py-6 px-3 w-full">
+      <header className="flex relative flex-col justify-between items-center py-6 px-3 w-full sm:flex-row">
         <img src={Brand} alt="brand" className="max-w-[210px]" />
 
-        <nav className="flex relative gap-5 justify-end items-center px-4">
+        <nav className="flex relative gap-5 justify-around items-center px-4 mt-8 w-full sm:justify-end sm:mt-0 sm:w-auto">
           <button
             className="group transition: flex gap-2 items-center text-sm font-bold text-white focus-within:text-proto-brand hover:text-proto-brand focus:text-proto-brand focus-within::border-0 focus:border-0 outline-none focus-within:ring-0
           focus:ring-0 duration-200   cursor-pointer
